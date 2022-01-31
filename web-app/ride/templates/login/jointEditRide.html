@@ -1,0 +1,92 @@
+{#login/templates/login/index.html#}
+
+{% extends 'login/base.html' %}
+{% block title %}Edit Driver Info{% endblock %}
+{% block content %}
+    {% if request.session.is_login %}
+
+    <h1>Current Ride Information</h1>
+    <table class="table table-bordered table-hover">
+
+        <thead>
+
+{#          <th><div style="width:100%;text-align:center"></div></th>#}
+          <th><div style="width:100%;text-align:center">Ride Owner</div></th>
+          <th><div style="width:100%;text-align:center"> Driver info</div></th>
+          <th><div style="width:100%;text-align:center">Arrival date</div></th>
+          <th><div style="width:100%;text-align:center"> Arrival time </div></th>
+          <th><div style="width:100%;text-align:center"> Starting  </div></th>
+          <th><div style="width:100%;text-align:center"> Destination </div></th>
+          <th><div style="width:100%;text-align:center"> Owner passenger numbers </div></th>
+          <th><div style="width:100%;text-align:center"> Sharer name and party numbers </div></th>
+          <th><div style="width:100%;text-align:center"> is Sharable </div></th>
+          <th><div style="width:100%;text-align:center"> Special Requests </div></th>
+          <th><div style="width:100%;text-align:center"> Vehicle Type Requests </div></th>
+          <th><div style="width:100%;text-align:center"> Status </div></th>
+      <th></th>
+          </tr>
+        </thead>
+        <tbody>
+    <tr>
+
+          <td><div style="width:100%;text-align:center">{{ride_item.owner.name}}</div></td>
+      {% if ride_item.status == 'confirmed' %}
+          <td><div style="width:100%;text-align:center">Driver name:{{ride_item.driver.owner.name}}<br>
+              Vehicle Type: {{ ride_item.driver.vehicleType}}<br>
+              Licence Plate: {{ ride_item.driver.licensePlateNumber}}<br>
+              Allowed Passengers: {{ ride_item.driver.allowedPassengers}}<br>
+              Speical Text: {{ ride_item.driver.specialInfo }}
+          </div></td>
+          {% else %}
+            <td><div style="width:100%;text-align:center">Ride not confirmed yet</div></td>
+      {% endif %}
+          <td><div style="width:100%;text-align:center">{{ride_item.date}}</div></td>
+          <td><div style="width:100%;text-align:center">{{ride_item.time}}</div></td>
+          <th><div style="width:100%;text-align:center">{{ride_item.start}}</div></th>
+          <th><div style="width:100%;text-align:center"> {{ride_item.end}} </div></th>
+          <th><div style="width:100%;text-align:center">{{ride_item.partySize}} </div></th>
+          <th><div style="width:100%;text-align:center">
+              {% for joint_ride in ride_item.sharer.all %}
+              Sharer name {{joint_ride.owner.name}}<br>
+                  Sharer party number {{joint_ride.partySize}}<br>
+              {% endfor %}
+          </div></th>
+          {% if ride_item.isSharable %}
+              <th><div style="width:100%;text-align:center"> Sharable  </div></th>
+              {% else %}
+              <th><div style="width:100%;text-align:center"> not Sharable  </div></th>
+          {% endif %}
+          <th><div style="width:100%;text-align:center"> {{ride_item.specialRequests}}  </div></th>
+          <th><div style="width:100%;text-align:center"> {{ride_item.vehicleTypeRequest}}  </div></th>
+          <th><div style="width:100%;text-align:center"> {{ride_item.status}} </div></th>
+
+
+    </tr>
+        </tbody>
+      </table>
+{#        register again part#}
+    <div class="container">
+        <div class="col-md-4 col-md-offset-4">
+          <form class='form-register' action="/jointEditRide/" method="post">
+
+              {% if message %}
+                  <div class="alert alert-warning">{{ message }}</div>
+              {% endif %}
+
+              {% csrf_token %}
+{#          or as_ul or as_table#}
+              {{joint_ride_form.as_p}}
+
+
+              <button type="reset" class="btn btn-default pull-left">Reset</button>
+              <button type="submit" class="btn btn-primary pull-right">Apply</button>
+
+          </form>
+        </div>
+    </div> <!-- /container -->
+
+
+    {% else %}
+    <h1>You have not logged in yet！</h1>
+    {% endif %}
+{% endblock %}
