@@ -1,0 +1,23 @@
+01/15
+Our group learned the basic acknowledge of the Django
+
+01/22
+Planed the structure of our RideWeb website, and discussed the classes of our models.py, which are User, Driver and Ride separately. (Added JoinRide class in 01/29)
+
+01/24
+Achieved the register and log in functions and corresponding html page.
+
+01/25
+Developed the base of our website and completed the base page of the passenger and driver.
+
+01/27
+Continued to work on the view.py, implemented the passengerSearchRide, editRide, and driverEdit function. Also programmed relative html pages to show those functions.
+
+01/29
+Finished the joinEidtRide function and tested the email feature.
+
+01/30
+Fixed some bugs and improved the overall optimization of the frontend.
+
+01/31
+Implemented the docker as the deployment to set the environment of our project.
